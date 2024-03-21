@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul li {
+    list-style-type: none;
+    background: url("../images/1.png") no-repeat 0rem 0.2rem;
+    background-size: 1rem 1rem;
+    text-indent: 2em;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.id1{
+    background: url("../images/main.jpg");
+    height: 75px;
+    width: 500px;
+    background-size: 500px 75px;
+    margin-top: 200px;
+    margin-bottom: 0px;
+    margin-left: 500px;
+
+}
+
+
+

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            border: 0px;
+        }
+        #header{
+            margin-top: 10px;
+            margin-right: 5px;
+            text-align: right;
+        }
+        #header a{
+            font-size: 12px;
+            color: black;
+            font-weight: bold;
+            padding-left: 18px;
+        }
+        #header a:nth-child(7),#header a:nth-child(8){
+            font-weight: normal;
+        }
+        #content{
+            height: 450px;
+            width: 100%;
+            text-align: center;
+            line-height: 450px;
+        }
+        #search_txt{
+            border: 1px solid #b8b8b8;
+            line-height: 30px;
+
+        }
+        #search{
+            line-height: 30px;
+            border: 1px solid #3385ff;
+            background-color: #3385ff;
+            color: white;
+            margin-left: -8px;
+            font-size: 16px;
+            width: 100px;
+        }
+        #footer{
+            text-align: center;
+            font-size:12px;
+            color: #999999;
+            line-height: 22px;
+        }
+        #dcode{
+            height: 60px;
+            width: 60px;
+            background-color: #b8b8b8;
+            margin: 0 auto;
+        }
+        p{
+            color: #666666;
+            font-weight: bold;
+            font-size:16px;
+        }
+        #footer a{
+            color: #999999;
+            margin-left: 20px;
+        }
+        #footer_left a{
+            margin-left: 0px;
+        }
+    </style>
+    <title>搜索一下，你就知道</title>
+
+    <script type="text/javascript">
+        function query() {
+            //执行关键词查询时清空过滤条件
+          //  document.getElementById("price").value="";
+            document.getElementById("page").value="";
+            //执行查询
+            queryList();
+        }
+        function queryList() {
+            //提交表单
+            document.getElementById("actionForm").submit();
+        }
+        function filter(key, value) {
+            document.getElementById(key).value=value;
+            queryList();
+        }
+        function changePage(p) {
+            var curpage = Number(document.getElementById("page").value);
+            curpage = curpage + p;
+            document.getElementById("page").value = curpage;
+            queryList();
+        }
+    </script>
+
+</head>
+<body>
+<div id="content">
+
+    <form th:id="actionForm" th:action="list" th:method="POST">
+        <div class="form">
+            <input th:type="text" class="text"
+                   th:name="queryString" th:id="search_txt" th:size=80 th:value="${queryString}">
+<!--            <input type="text" id="search_txt" size=80 value="${queryString}">-->
+            <input type="button" value="搜索" class="search" onclick="query()">
+        </div>
+        <input th:type="hidden" th:name="page" th:id="page" th:value="${result.curPage}"/>
+    </form>
+
+<!--    <input type="text" id="search_txt" size=80>-->
+<!--    <input type="button" id="search" value="搜索">-->
+</div>
+<!--<div id="footer">-->
+<!--    <div id="dcode">二维码</div>-->
+<!--    <p>手机百度</p>-->
+<!--    <a href="#">把百度设为主页</a>-->
+<!--    <a href="#">关于百度</a>-->
+<!--    <a href="#">About baidu</a>-->
+<!--    <a href="#">百度推广</a><br>-->
+<!--    <span id="footer_left">-->
+<!--            ©2017 Baidu<a href="#">使用百度前必读</a>-->
+<!--            <a href="#">意见反馈</a>京ICP证030173号-->
+<!--        </span>-->
+<!--    <a href="#">京公安备11000002000001号</a>-->
+
+<!--</div>-->
+
+<div id="filter">
+    <div class="cls"></div>
+    <div class="fore1">
+        <dl class="activity">
+            <dd></dd>
+        </dl>
+        <div class="pagin pagin-m">
+            <span class="text"><i th:text="${result.curPage }"></i>/<i th:text="${result.pageCount }"></i></span>
+            <a href="javascript:changePage(-1)" class="prev">上一页<b></b></a>
+            <a href="javascript:changePage(1)" class="next">下一页<b></b></a>
+        </div>
+        <div class="total">
+			<span>共<strong th:text="${result.recordCount }"></strong>条新闻
+			</span>
+        </div>
+        <span class="clr"></span>
+    </div>
+</div>
+
+<div id="plist" class="m plist-n7 plist-n8 prebuy">
+    <ul class="list-h">
+        <li pid="${news.pid}" th:each="news:${result.newsList}">
+            <div class="lh-wrap">
+                <div class="p-img">
+                    <a target="_blank" href="#">
+                        <img width="220" height="282" class="err-product" th:src="${news.head_img}">
+                    </a>
+                </div>
+                <div class="p-name">
+                    <a th:text="${news.title}"></a>
+                </div>
+<!--                <div class="p-price">-->
+<!--                    <strong th:text="${item.price}"></strong><span id="p1269191543"></span>-->
+<!--                </div>-->
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+</body>
+</html>
